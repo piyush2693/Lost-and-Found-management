@@ -13,10 +13,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Local storage (temporary)
+// ✅ Use /tmp for multer storage (important for Render)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");  // 
+    cb(null, "/tmp");  // ✅ works safely on Render
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
@@ -26,11 +26,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 import { foundReport, lostReport } from "../controllers/reportItem.js";
-import { getLostItems, getFoundItems } from "../controllers/getItems.js"
+import { getLostItems, getFoundItems } from "../controllers/getItems.js";
 
 const router = express.Router();
 
-
+// ✅ Improved cloudinary uploader with better error logging
 async function uploadToCloudinary(req, res, next) {
   if (!req.file) return next();
 
@@ -45,14 +45,13 @@ async function uploadToCloudinary(req, res, next) {
     await fs.unlink(req.file.path); // delete local file after upload
     next();
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Cloudinary upload failed" });
+    console.error("Cloudinary Upload Error:", err);
+    res.status(500).json({ error: "Cloudinary upload failed", details: err.message });
   }
 }
 
 router.post("/found-report", upload.single("image"), uploadToCloudinary, foundReport);
 router.post("/lost-report", upload.single("image"), uploadToCloudinary, lostReport);
-
 
 router.get("/lost-items", getLostItems);
 router.get("/found-items", getFoundItems);

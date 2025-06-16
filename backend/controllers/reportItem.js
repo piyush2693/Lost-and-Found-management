@@ -1,19 +1,15 @@
 import FoundItem from "../models/foundItem.js";
 import LostItem from "../models/lostItem.js";
 
+// FOUND REPORT
 export const foundReport = async (req, res) => {
   try {
-    console.log("Request Body: ", req.body);
-    console.log("Request File: ", req.file);
+    const imageUrl = req.file?.cloudinaryUrl || null;
 
-    const file = req.file;
-
-    if (!file) {
-      return res.status(400).json({ error: "Image file is missing" });
+    if (!imageUrl) {
+      return res.status(400).json({ error: "Image upload failed" });
     }
 
-    const imageUrl = file.cloudinaryUrl;  
-    console.log("image_URL : " + imageUrl);
     const newItem = new FoundItem({
       image: imageUrl,
       category: req.body.category,
@@ -24,28 +20,23 @@ export const foundReport = async (req, res) => {
       contact: req.body.contact,
       roll: req.body.roll,
     });
-    console.log(newItem);
+
     await newItem.save();
-
-    res.status(201).json({ message: "Item reported successfully", item: newItem });
-
-  } catch (error) {
-    console.error("Error while saving Found Item:", error);
-    res.status(500).json({ error: "Server Error" });
+    res.status(201).json({ message: "Found item reported successfully", item: newItem });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error while reporting found item" });
   }
 };
 
-
+// LOST REPORT
 export const lostReport = async (req, res) => {
   try {
-    const file = req.file;
+    const imageUrl = req.file?.cloudinaryUrl || null;
 
-    if (!file) {
-      return res.status(400).json({ error: "Image file is missing" });
+    if (!imageUrl) {
+      return res.status(400).json({ error: "Image upload failed" });
     }
-
-    const imageUrl = file.cloudinaryUrl;
-    console.log("Image URL: " + imageUrl);
 
     const newItem = new LostItem({
       image: imageUrl,
@@ -58,18 +49,10 @@ export const lostReport = async (req, res) => {
       roll: req.body.roll,
     });
 
-    console.log(newItem);
     await newItem.save();
-
-    res.status(201).json({ message: "Lost Item reported successfully", item: newItem });
-
-  } catch (error) {
-    console.error("Error while saving Lost Item:", error);
-    res.status(500).json({ error: "Server Error" });
+    res.status(201).json({ message: "Lost item reported successfully", item: newItem });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error while reporting lost item" });
   }
 };
-
-
-
-
-
