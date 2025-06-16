@@ -12,7 +12,7 @@ export const foundReport = async (req, res) => {
       return res.status(400).json({ error: "Image file is missing" });
     }
 
-    const imageUrl = file.path;  
+    const imageUrl = file.cloudinaryUrl;  
     console.log("image_URL : " + imageUrl);
     const newItem = new FoundItem({
       image: imageUrl,
@@ -44,7 +44,7 @@ export const lostReport = async (req, res) => {
       return res.status(400).json({ error: "Image file is missing" });
     }
 
-    const imageUrl = file.path;
+    const imageUrl = file.cloudinaryUrl;
     console.log("Image URL: " + imageUrl);
 
     const newItem = new LostItem({
