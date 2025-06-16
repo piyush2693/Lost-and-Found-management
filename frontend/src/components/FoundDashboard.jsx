@@ -13,14 +13,15 @@ const FoundDashboard = () => {
   useEffect(() => {
     const fetchFoundItems = async () => {
       try {
-        setLoading(false);
+        const url = "https://lost-and-found-6qof.onrender.com";
+        // setLoading(true);
         const response = await axios.get(
-          "/api/v1/user/found-items"
+          `${url}/api/v1/user/found-items`
         );
         setItems(response.data);
       } catch (err) {
         console.error(err);
-        setLoading(false);
+        // setLoading(false);
       }
     };
 

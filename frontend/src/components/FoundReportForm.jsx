@@ -56,8 +56,9 @@ const FoundReportForm = () => {
     formDataToSend.append("roll", formData.roll);
 
     try {
+      const url = "https://lost-and-found-6qof.onrender.com";
       await axios.post(
-        "/api/v1/user/found-report",
+        `${url}/api/v1/user/found-report`,
         formDataToSend,
         {
           headers: {
