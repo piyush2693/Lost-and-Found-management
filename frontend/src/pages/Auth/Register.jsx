@@ -1,124 +1,10 @@
-// import React, { useState } from "react";
-// import Navbar from '../../components/Navbar';
-// import '../../styles/RegisterForm.css';
-// import toast from "react-hot-toast";
-// import axios from 'axios';
-// import { useNavigate } from "react-router-dom";
 
-// const Register = () => {
-//   const navigate = useNavigate();
-
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     email: "",
-//     password: "",
-//     roll: "",
-//     phone: "",
-//   });
-
-// const handleChange = (e) => {
-//   setFormData({ ...formData, [e.target.name]: e.target.value });
-// };
-
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const res = await axios.post(`/api/v1/auth/register`, formData);
-
-//     if (res && res.data.success) {
-//       toast.success(res.data.message);
-//       navigate("/login");
-//     } else {
-//       toast.error(res.data.message);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     toast.error("Something went wrong");
-//   }
-// };
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="register-container">
-//         <h2>Register</h2>
-//         <form onSubmit={handleSubmit} className="register-form">
-//           <div className="form-group">
-//             <label>Name</label>
-//             <input
-//               type="text"
-//               name="name"
-//               value={formData.name}
-//               onChange={handleChange}
-//               placeholder="Enter your name"
-//               required
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <label>Email</label>
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               placeholder="Enter your email"
-//               required
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <label>Roll No</label>
-//             <input
-//               type="text"
-//               name="roll"
-//               value={formData.roll}
-//               onChange={handleChange}
-//               placeholder="Enter your roll number"
-//               required
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <label>Phone</label>
-//             <input
-//               type="text"
-//               name="phone"
-//               value={formData.phone}
-//               onChange={handleChange}
-//               placeholder="Enter your phone number"
-//               required
-//             />
-//           </div>
-
-//           <div className="form-group">
-//             <label>Password</label>
-//             <input
-//               type="password"
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               placeholder="Enter your password"
-//               required
-//             />
-//           </div>
-
-//           <button type="submit" className="submit-btn">
-//             Register
-//           </button>
-//         </form>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Register;
 
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/RegisterForm.css";
-import Navbar from "../../components/Navbar";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -169,7 +55,6 @@ const handleChange = (e) => {
 
   return (
     <>
-    {/* <Navbar /> */}
     <div className="register-container">
       <div className="register-card">
         <div className="register-header">
@@ -279,25 +164,6 @@ const handleChange = (e) => {
               />
             </div>
 
-            {/* <div className="terms-group">
-              <input
-                id="terms"
-                name="terms"
-                type="checkbox"
-                required
-                className="checkbox"
-              />
-              <label htmlFor="terms" className="terms-label">
-                I agree to the{" "}
-                <a href="#" className="terms-link">
-                  Terms and Conditions
-                </a>{" "}
-                and{" "}
-                <a href="#" className="terms-link">
-                  Privacy Policy
-                </a>
-              </label>
-            </div> */}
 
             <button type="submit" className="submit-btn">
               Create Account
