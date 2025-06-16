@@ -3,35 +3,42 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginForm.css";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
+import ButtonSpinner from "../../components/Loader/ButtonSpinner";
+
 const Login = () => {
   const [email, setEmail] = useState("");
+  const [loader, setLoader] = useState(false);
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-  const url = "https://lost-and-found-6qof.onrender.com";
-  e.preventDefault();
-  try {
-    const res = await axios.post(`${url}/api/v1/auth/login`, { email, password });
-    if (res && res.data.success) {
-      const token = res.data.token;
-      const user = res.data.user;
-      
-      login(user, token); // <-- update auth context
+  const handleSubmit = async (e) => {
+    const url = "https://lost-and-found-6qof.onrender.com";
+    e.preventDefault();
+    try {
+      setLoader(true);
+      const res = await axios.post(`${url}/api/v1/auth/login`, {
+        email,
+        password,
+      });
+      if (res && res.data.success) {
+        const token = res.data.token;
+        const user = res.data.user;
 
-      navigate("/home");
-    } else {
-      console.log(res.data.message);
+        login(user, token); // <-- update auth context
+
+        setLoader(false);
+        navigate("/home");
+      } else {
+        console.log(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
   return (
     <>
-      {/* <Navbar /> */}
       <div className="login-container">
         <div className="login-card">
           <div className="login-header">
@@ -82,10 +89,15 @@ const handleSubmit = async (e) => {
                   </a>
                 </div>
               </div>
-
-              <button type="submit" className="submit-btn">
-                Sign in
-              </button>
+              <div className="login-box">
+                {loader ? (
+                  <ButtonSpinner />
+                ) : (
+                  <button type="submit" className="submit-btn">
+                    Sign in
+                  </button>
+                )}
+              </div>
 
               <div className="signup-link">
                 <span className="signup-text">Don't have an account? </span>

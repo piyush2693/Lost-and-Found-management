@@ -128,7 +128,11 @@
   transition: background-color 0.15s ease;
   margin-top: 4px;
 }
-
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .submit-btn:hover {
   background-color: #0f766e;
 }

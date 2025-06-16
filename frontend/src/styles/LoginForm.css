@@ -99,20 +99,9 @@
   gap: 8px;
 }
 
-.checkbox {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
-  accent-color: #14b8a6;
-}
 
-.checkbox-label {
-  color: #111827;
-  font-size: 14px;
-  user-select: none;
-  cursor: pointer;
-}
+
+
 
 .forgot-password {
   font-size: 14px;
@@ -152,6 +141,11 @@
   transform: translateY(1px);
 }
 
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Signup Link */
 .signup-link {
   text-align: center;
