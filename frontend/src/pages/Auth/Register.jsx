@@ -36,8 +36,9 @@ const handleChange = (e) => {
       return;
     }
     console.log(formData.email);
+    const url = "https://lost-and-found-6qof.onrender.com";
     try {
-      const res = await axios.post(`/api/v1/auth/register`,formData);
+      const res = await axios.post(`${url}/api/v1/auth/register`,formData);
 
       if (res && res.data.success) {
         // console(res.data.message);

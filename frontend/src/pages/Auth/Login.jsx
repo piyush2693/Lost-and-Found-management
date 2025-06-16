@@ -10,9 +10,10 @@ const Login = () => {
   const navigate = useNavigate();
 
 const handleSubmit = async (e) => {
+  const url = "https://lost-and-found-6qof.onrender.com";
   e.preventDefault();
   try {
-    const res = await axios.post("/api/v1/auth/login", { email, password });
+    const res = await axios.post(`${url}/api/v1/auth/login`, { email, password });
     if (res && res.data.success) {
       const token = res.data.token;
       const user = res.data.user;
