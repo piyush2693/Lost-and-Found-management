@@ -15,7 +15,7 @@ const FoundDashboard = () => {
       try {
         setLoading(false);
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/found-items"
+          "/api/v1/user/found-items"
         );
         setItems(response.data);
       } catch (err) {

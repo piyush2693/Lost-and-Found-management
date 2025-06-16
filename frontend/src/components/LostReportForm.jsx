@@ -56,7 +56,7 @@ const LostReportForm = () => {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/user/lost-report",
+        "/api/v1/user/lost-report",
         formDataToSend,
         {
           headers: {

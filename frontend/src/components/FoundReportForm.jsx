@@ -57,7 +57,7 @@ const FoundReportForm = () => {
 
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/user/found-report",
+        "/api/v1/user/found-report",
         formDataToSend,
         {
           headers: {
@@ -208,15 +208,3 @@ const FoundReportForm = () => {
 
 export default FoundReportForm;
 
-// Reset form
-// setFormData({
-//   image: null,
-//   category: "",
-//   description: "",
-//   dateFound: "",
-//   foundLocation: "pending",
-//   foundBy: "",
-//   contact: "",
-//   additionalNotes: "",
-// });
-// setFileName("No file chosen");

@@ -14,7 +14,7 @@ const LostDashboard = () => {
       try {
         setLoading(false);
         const response = await axios.get(
-          "http://localhost:8000/api/v1/user/lost-items"
+          "/api/v1/user/lost-items"
         );
         setItems(response.data);
       } catch (err) {
