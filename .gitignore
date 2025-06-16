@@ -1,0 +1,28 @@
+# Node modules at root level
+node_modules/
+
+# Backend node_modules
+backend/node_modules/
+
+# Frontend node_modules
+frontend/node_modules/
+
+# Global env files
+.env
+
+# Editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+
+# Builds
+build/
+dist/
