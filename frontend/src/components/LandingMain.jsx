@@ -148,12 +148,12 @@ const LandingMain = () => {
       </section>
 
       
-      <section className="how-it-works-section">
-        <div className="container">
+      <section className="how-it-works-section-landing">
+        <div className="container-landing">
           <h2 className="section-title">How It Works</h2>
-          <div className="steps-grid">
+          <div className="steps-grid-landing">
             
-            <div className="step-card">
+            <div className="step-card-landing">
               <div className="step-icon">
                 <div className="step-icon-inner">
                   <div className="report-bars">
@@ -170,7 +170,7 @@ const LandingMain = () => {
             </div>
 
             
-            <div className="step-card">
+            <div className="step-card-landing">
               <div className="step-icon">
                 <div className="step-icon-inner">
                   <div className="match-symbol">
@@ -189,7 +189,7 @@ const LandingMain = () => {
             </div>
 
             
-            <div className="step-card">
+            <div className="step-card-landing">
               <div className="step-icon">
                 <div className="step-icon-inner">
                   <div className="document">
