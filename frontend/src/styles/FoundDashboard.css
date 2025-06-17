@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-  
+  min-height: 100vh;
   margin: 0 auto;
   padding: 32px;
   width: 100%;
@@ -213,6 +213,15 @@ body {
   height: 64px;
 }
 
+.loading-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-box h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
 /* Responsive design */
 @media (max-width: 1024px) {
   .items-grid {

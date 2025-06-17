@@ -1,4 +1,4 @@
-import React from "react";
+
 import DashboardCard from "./DashboardCard";
 import LostItemCard from "./LostItemCard";
 import axios from "axios";
@@ -13,14 +13,14 @@ const LostDashboard = () => {
     const fetchLostItems = async () => {
       try {
         const url = "https://lost-and-found-6qof.onrender.com";
-        // setLoading(false);
+        setLoading(true);
         const response = await axios.get(
           `${url}/api/v1/user/lost-items`
         );
         setItems(response.data);
+        setLoading(false);
       } catch (err) {
         console.error(err);
-        // setLoading(false);
       }
     };
 
@@ -36,13 +36,17 @@ const LostDashboard = () => {
           <p className="subtitle">Browse and search through lost items.</p>
         </div>
         <DashboardCard />
-      
-
-      <div className="card-list">
-        {items.map((item, index) => (
-          <LostItemCard key={index} item={item} />
-        ))}
-      </div>
+      {loading ? (
+          <div className="loading-box">
+            <h3>Loading found items....</h3>
+          </div>
+        ) : (
+          <div className="card-list">
+            {items.map((item, index) => (
+              <LostItemCard key={index} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
