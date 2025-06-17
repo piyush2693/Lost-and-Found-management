@@ -9,8 +9,8 @@ const AuthProvider = ({ children }) => {
     user: null,
     token: "",
   });
+  const [loading, setLoading] = useState(true);
 
-  // Load auth from localStorage on mount
   useEffect(() => {
     const storedData = localStorage.getItem("auth");
     if (storedData) {
@@ -20,22 +20,21 @@ const AuthProvider = ({ children }) => {
         token: parsedData.token,
       });
     }
+    setLoading(false);
   }, []);
 
-  // Custom login function
   const login = (user, token) => {
     setAuth({ user, token });
     localStorage.setItem("auth", JSON.stringify({ user, token }));
   };
 
-  // Custom logout function
   const logout = () => {
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
   };
 
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ auth, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
