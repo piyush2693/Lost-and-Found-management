@@ -22,7 +22,7 @@ function HomeMain() {
     <>
       <div className="lost-found-container">
         {/* Main Content */}
-        <main className="main-content">
+        <main className="main-content-home">
           {/* Hero Section */}
           <section className="hero-section">
             <div className="hero-content">

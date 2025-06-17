@@ -9,7 +9,7 @@ const LandingMain = () => {
         <div className="app-container">
       
       <section className="hero-sections">
-        <div className="container">
+        <div className="container-landing">
           <div className="hero-grid">
             
             <div className="hero-contents">
