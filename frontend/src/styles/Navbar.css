@@ -233,6 +233,9 @@
   #logout-link {
     display: flex;
   }
+  #logout-button {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -261,6 +264,10 @@
 
   #logout-link {
     display: flex;
+  }
+
+  #logout-button {
+    display: none;
   }
 }
 

@@ -28,10 +28,8 @@ const Login = () => {
         login(user, token); // <-- update auth context
 
         setLoader(false);
-        navigate("/home");
-      } else {
-        console.log(res.data.message);
-      }
+      } 
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }

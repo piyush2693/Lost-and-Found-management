@@ -208,14 +208,20 @@ const Navbar = () => {
               <button
                 onClick={() => navigate("/login")}
                 className="login-button"
+                id="logout-button"
               >
                 Login
               </button>
             ) : (
-              // <button onClick={handleLogout} className="login-button">
-              //   Logout
-              // </button>
-              <div className="mobile-menu-button">
+              <button onClick={handleLogout} id="logout-button" className="login-button">
+                Logout
+              </button>
+              
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+            <div className="mobile-menu-button">
                 <button
                   className="hamburger-button"
                   onClick={toggleMobileMenu}
@@ -227,10 +233,6 @@ const Navbar = () => {
                   <span className="hamburger-line"></span>
                 </button>
               </div>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
         </div>
       </nav>
     </header>
