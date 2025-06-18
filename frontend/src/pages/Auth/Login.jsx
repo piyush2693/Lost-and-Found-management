@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginForm.css";
 import axios from "axios";
@@ -33,7 +33,31 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; 
+  useEffect(() => {
+    const storedData = localStorage.getItem("auth");
+  
+    if (storedData) {
+      try {
+        const parsed = JSON.parse(storedData);
+  
+        if (parsed.token) {
+          const payload = JSON.parse(atob(parsed.token.split('.')[1]));
+          const isExpired = payload.exp * 1000 < Date.now();
+  
+          if (!isExpired) {
+            navigate('/home');
+          } else {
+            localStorage.removeItem("auth");
+            navigate('/');
+          }
+        }
+      } catch (e) {
+        console.error("Invalid auth data", e);
+        localStorage.removeItem("auth");
+      }
+    }
+  }, []);
 
   return (
     <>
