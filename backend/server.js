@@ -5,11 +5,11 @@ import morgan from "morgan";
 import connectDB from "./config/database.js";
 import authRoutes from "./routes/authRoute.js";
 import userRoutes from "./routes/userRoute.js"
+dotenv.config();
 
 import cors from "cors";
 
 //configure env
-dotenv.config();
 
 //databse config
 connectDB();
@@ -18,7 +18,12 @@ connectDB();
 const app = express();
 
 //middelwares
-app.use(cors());
+app.use(cors({
+  origin: "https://lost-and-found-frontend-zn9e.onrender.com", 
+  credentials: true,
+  optionsSuccessStatus: 200,
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
 
