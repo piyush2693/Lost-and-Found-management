@@ -19,7 +19,7 @@ export const forgotPassword = async (req, res) => {
     <p>Click the link below to reset your password. This link expires in 15 minutes.</p>
     <a href="${resetURL}">${resetURL}</a>
   `;
-
+  console.log("URL"+url);
   try {
     await sendEmail(user.email, 'Reset Your Password', html);
     res.json({ success: true, message: 'Reset link sent to your email' });

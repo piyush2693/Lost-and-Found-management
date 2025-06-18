@@ -14,6 +14,7 @@ import LostReport from './pages/LostReportPage';
 import FoundReportPage from './pages/FoundReportPage';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import ResetPassword from './pages/Auth/ResetPassword';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Private Routes */}
         <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
