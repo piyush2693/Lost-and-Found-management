@@ -15,10 +15,13 @@ import FoundReportPage from './pages/FoundReportPage';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
+       <ToastContainer position="top-center" />
       <Routes>
 
         {/* Public Routes */}

@@ -4,6 +4,7 @@ import "../../styles/LoginForm.css";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import ButtonSpinner from "../../components/Loader/ButtonSpinner";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,8 +16,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     const url = "https://lost-and-found-6qof.onrender.com";
     e.preventDefault();
+    setLoader(true);
     try {
-      setLoader(true);
       const res = await axios.post(`${url}/api/v1/auth/login`, {
         email,
         password,
@@ -25,14 +26,15 @@ const Login = () => {
         const token = res.data.token;
         const user = res.data.user;
 
-        login(user, token); // <-- update auth context
+        login(user, token); 
 
-        setLoader(false);
-      } 
+      }
+      toast.success("Login Successfully!!!");
       navigate("/home");
     } catch (error) {
       console.log(error);
     }
+    setLoader(false);
   }; 
   useEffect(() => {
     const storedData = localStorage.getItem("auth");

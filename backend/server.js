@@ -18,11 +18,12 @@ connectDB();
 const app = express();
 
 //middelwares
-app.use(cors({
-  origin: "https://lost-and-found-frontend-zn9e.onrender.com", 
-  credentials: true,
-  optionsSuccessStatus: 200,
-}));
+// app.use(cors({
+//   origin: "https://lost-and-found-frontend-zn9e.onrender.com", 
+//   credentials: true,
+//   optionsSuccessStatus: 200,
+// }));
+app.use(cors());
 
 app.use(express.json());
 app.use(morgan("dev"));
