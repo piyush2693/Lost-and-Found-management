@@ -11,7 +11,7 @@ function ResetPassword() {
     e.preventDefault();
     try {
         const url = "https://lost-and-found-6qof.onrender.com";
-        //    const url = "http://localhost:8000";
+        
       const res = await axios.post(
         `${url}/api/v1/auth/reset-password/${token}`,
         { newPassword }
