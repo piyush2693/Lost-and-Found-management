@@ -1,8 +1,35 @@
 import bcrypt from "bcrypt";
-import nodemailer from 'nodemailer';
+import {Resend} from 'resend';
 import dotenv from 'dotenv';
 
 dotenv.config();
+const key = process.env.RESEND_API_KEY;
+const resend = new Resend(key);
+
+
+// Send Email Function using Resend
+export const sendEmail = async (to, subject, htmlContent) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'Lost & Found <onboarding@resend.dev>', 
+      to,
+      subject,
+      html: htmlContent,
+    });
+
+    if (error) {
+      console.error('Error sending email with Resend:', error);
+      throw new Error('Email could not be sent');
+    }
+
+    console.log('Email sent:', data.id);
+  } catch (error) {
+    console.error('Unexpected error sending email:', error);
+    throw new Error('Email sending failed');
+  }
+};
+
+
 // Hash the password
 export const hashPassword = async (password) => {
   try {
@@ -21,30 +48,5 @@ export const comparePassword = async (password, hashedPassword) => {
   } catch (error) {
     console.error("Error comparing passwords:", error);
     throw new Error("Comparison failed");
-  }
-};
-
-export const sendEmail = async (to, subject, htmlContent) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail', 
-      auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS, 
-      },
-    });
-
-    const mailOptions = {
-      from: '"Lost & Found" <no-reply@lostfound.com>',
-      to,
-      subject,
-      html: htmlContent,
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId);
-  } catch (error) {
-    console.error('Error sending email:', error);
-    throw new Error('Email could not be sent');
   }
 };
