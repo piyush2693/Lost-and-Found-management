@@ -25,8 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-import { foundReport, lostReport } from "../controllers/reportItem.js";
-import { getLostItems, getFoundItems } from "../controllers/getItems.js";
+
 
 const router = express.Router();
 
@@ -50,10 +49,18 @@ async function uploadToCloudinary(req, res, next) {
   }
 }
 
+import { foundReport, lostReport } from "../controllers/reportItem.js";
+import { getLostItems, getFoundItems } from "../controllers/getItems.js";
+
+
 router.post("/found-report", upload.single("image"), uploadToCloudinary, foundReport);
 router.post("/lost-report", upload.single("image"), uploadToCloudinary, lostReport);
 
+
+
 router.get("/lost-items", getLostItems);
 router.get("/found-items", getFoundItems);
+
+
 
 export default router;
