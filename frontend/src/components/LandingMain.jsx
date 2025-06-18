@@ -1,8 +1,37 @@
 
+import { useEffect } from 'react';
+import { useAuth } from '../context/auth';
 import '../styles/LandingMain.css'
 import { useNavigate } from 'react-router-dom';
 const LandingMain = () => {
   const navigate = useNavigate();
+  const {auth} = useAuth();
+
+  useEffect(() => {
+  const storedData = localStorage.getItem("auth");
+
+  if (storedData) {
+    try {
+      const parsed = JSON.parse(storedData);
+
+      if (parsed.token) {
+        const payload = JSON.parse(atob(parsed.token.split('.')[1]));
+        const isExpired = payload.exp * 1000 < Date.now();
+
+        if (!isExpired) {
+          navigate('/home');
+        } else {
+          localStorage.removeItem("auth");
+          navigate('/');
+        }
+      }
+    } catch (e) {
+      console.error("Invalid auth data", e);
+      localStorage.removeItem("auth");
+    }
+  }
+}, []);
+
   return (
     <>
     
