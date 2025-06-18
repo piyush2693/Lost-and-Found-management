@@ -4,7 +4,7 @@ import './ButtonSpinner.css';
 
 function ButtonSpinner() {
   return (
-    <div class="btn-spinner"></div>
+    <div className="btn-spinner"></div>
   )
 }
 

@@ -28,7 +28,8 @@ const DashboardCard = () => {
           </div>
           <input
             type="text"
-            value=""
+            
+            defaultValue="search-box"
             placeholder="Search"
             className="search-input"
             aria-label="Search found items"

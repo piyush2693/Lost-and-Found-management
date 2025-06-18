@@ -4,12 +4,14 @@ import axios from "axios";
 import "../../styles/ForgotPassword.css";
 import ButtonSpinner from "../../components/Loader/ButtonSpinner";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function ResetPassword() {
   const navigate = useNavigate();
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState("");
   const [loader, setLoader] = useState(false);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoader(true);
@@ -20,13 +22,15 @@ function ResetPassword() {
         `${url}/api/v1/auth/reset-password/${token}`,
         { newPassword }
       );
+      toast.success(res.data.message);
       navigate("/login");
     } catch (err) {
-      setMessage(
-        "Reset failed: " + (err.response?.data?.message || "Unknown error")
-      );
+      const errorMessage = err.response?.data?.message || "Unknown error";
+      toast.error(errorMessage);
+      console.log(err);
+    } finally {
+      setLoader(false);
     }
-    setLoader(false);
   };
 
   return (

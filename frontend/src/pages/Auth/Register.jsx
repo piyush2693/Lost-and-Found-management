@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/RegisterForm.css";
 import ButtonSpinner from "../../components/Loader/ButtonSpinner";
+import { toast } from "react-toastify";
+
 const Register = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
@@ -28,23 +30,26 @@ const Register = () => {
     e.preventDefault();
     setLoader(true);
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match!");
+      toast.error("Passwords don't match!");
       return;
     }
-    console.log(formData.email);
     const url = "https://lost-and-found-6qof.onrender.com";
     try {
       const res = await axios.post(`${url}/api/v1/auth/register`, formData);
 
       if (res && res.data.success) {
-        setLoader(false);
+        toast.success(res.data.message);
         navigate("/login");
       } else {
         console.log(res.data.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
-      console.log(error);
-      // toast.error("Something went wrong");
+      const errorMessage = error?.response?.data?.message || "Sign up failed. Try again.";
+      toast.error(errorMessage);
+      
+    } finally {
+      setLoader(false);
     }
   };
 

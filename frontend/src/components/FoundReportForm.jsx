@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "././styles/ReportForm.css";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
-import Spinner from "./Loader/Spinner";
+import { toast } from "react-toastify";
+import DotLoader from "./Loader/DotLoader";
 
 const FoundReportForm = () => {
   const navigate = useNavigate();
@@ -41,10 +41,9 @@ const FoundReportForm = () => {
       !formData.foundBy ||
       !formData.image
     ) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
       return;
     }
-    setLoader(true);
     const formDataToSend = new FormData();
     formDataToSend.append("image", formData.image);
     formDataToSend.append("category", formData.category);
@@ -55,9 +54,9 @@ const FoundReportForm = () => {
     formDataToSend.append("contact", formData.contact);
     formDataToSend.append("roll", formData.roll);
 
+    setLoader(true);
     try {
-      
-      await axios.post(
+      const res = await axios.post(
         `https://lost-and-found-6qof.onrender.com/api/v1/user/found-report`,
         formDataToSend,
         {
@@ -66,146 +65,138 @@ const FoundReportForm = () => {
           },
         }
       );
-    } catch (err) {
-      alert("Error occurred!");
-      console.error(err);
+      toast.success(res.data.message);
+      navigate("/found");
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        "Server error while reporting found item";
+      toast.error(errorMessage);
+    } finally {
+      setLoader(false);
     }
-    setLoader(false);
-    navigate("/home");
   };
 
   return (
     <div className="container-form">
-      {loader ? (
-        <div className="spinner-box">
-          <Spinner />
+      <div className="form-wrapper">
+        <div className="close-icon" onClick={() => navigate("/home")}>
+          &times;
         </div>
-      ) : (
-        <div className="form-wrapper">
-          <div className="close-icon" onClick={() => navigate("/home")}>
-            &times;
+        <h1 className="header">Add Found Item</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="file-upload">
+            <label>Upload Image</label>
+            <div className="file-upload-box">
+              <input type="file" accept="image/*" onChange={handleFileChange} />
+              <span className="file-name">{fileName}</span>
+            </div>
           </div>
-          <h1 className="header">Add Found Item</h1>
 
-          <form onSubmit={handleSubmit}>
-            <div className="file-upload">
-              <label>Upload Image</label>
-              <div className="file-upload-box">
+          <div className="grid-container-form">
+            <div className="section">
+              <h2>Item Details</h2>
+
+              <div className="field">
+                <label>Category:</label>
                 <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
+                  type="text"
+                  value={formData.category}
+                  onChange={(e) =>
+                    handleInputChange("category", e.target.value)
+                  }
+                  placeholder="Enter item category"
                 />
-                <span className="file-name">{fileName}</span>
+              </div>
+
+              <div className="field">
+                <label>Description:</label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
+                  placeholder="Describe the found item"
+                />
+              </div>
+
+              <div className="field">
+                <label>Date Found:</label>
+                <input
+                  type="date"
+                  value={formData.dateFound}
+                  onChange={(e) =>
+                    handleInputChange("dateFound", e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="field">
+                <label>Found Location:</label>
+                <select
+                  value={formData.foundLocation}
+                  onChange={(e) =>
+                    handleInputChange("foundLocation", e.target.value)
+                  }
+                >
+                  <option value="pending">Pending</option>
+                  <option value="campus">Campus</option>
+                  <option value="library">Library</option>
+                  <option value="cafeteria">Cafeteria</option>
+                  <option value="parking">Parking Lot</option>
+                  <option value="classroom">Classroom</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
             </div>
 
-            <div className="grid-container-form">
-              <div className="section">
-                <h2>Item Details</h2>
+            <div className="section">
+              <h2>Founder Information</h2>
 
-                <div className="field">
-                  <label>Category:</label>
-                  <input
-                    type="text"
-                    value={formData.category}
-                    onChange={(e) =>
-                      handleInputChange("category", e.target.value)
-                    }
-                    placeholder="Enter item category"
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Description:</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      handleInputChange("description", e.target.value)
-                    }
-                    placeholder="Describe the found item"
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Date Found:</label>
-                  <input
-                    type="date"
-                    value={formData.dateFound}
-                    onChange={(e) =>
-                      handleInputChange("dateFound", e.target.value)
-                    }
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Found Location:</label>
-                  <select
-                    value={formData.foundLocation}
-                    onChange={(e) =>
-                      handleInputChange("foundLocation", e.target.value)
-                    }
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="campus">Campus</option>
-                    <option value="library">Library</option>
-                    <option value="cafeteria">Cafeteria</option>
-                    <option value="parking">Parking Lot</option>
-                    <option value="classroom">Classroom</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
+              <div className="field">
+                <label>Found By:</label>
+                <input
+                  type="text"
+                  value={formData.foundBy}
+                  onChange={(e) => handleInputChange("foundBy", e.target.value)}
+                  placeholder="Enter your name"
+                />
               </div>
 
-              <div className="section">
-                <h2>Founder Information</h2>
+              <div className="field">
+                <label>Contact:</label>
+                <input
+                  type="tel"
+                  value={formData.contact}
+                  onChange={(e) => handleInputChange("contact", e.target.value)}
+                  placeholder="Enter your phone no."
+                />
+              </div>
 
-                <div className="field">
-                  <label>Found By:</label>
-                  <input
-                    type="text"
-                    value={formData.foundBy}
-                    onChange={(e) =>
-                      handleInputChange("foundBy", e.target.value)
-                    }
-                    placeholder="Enter your name"
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Contact:</label>
-                  <input
-                    type="tel"
-                    value={formData.contact}
-                    onChange={(e) =>
-                      handleInputChange("contact", e.target.value)
-                    }
-                    placeholder="Enter your phone no."
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Roll Number:</label>
-                  <input
-                    value={formData.additionalNotes}
-                    onChange={(e) =>
-                      handleInputChange("roll", e.target.value)
-                    }
-                    placeholder="Enter your roll no."
-                  />
-                </div>
+              <div className="field">
+                <label>Roll Number:</label>
+                <input
+                  value={formData.roll}
+                  onChange={(e) => handleInputChange("roll", e.target.value)}
+                  placeholder="Enter your roll no."
+                />
               </div>
             </div>
-
+          </div>
+          {loader ? (
+            <div className="loader-box">
+              <DotLoader />
+            </div>
+          ) : (
             <button type="submit" className="submit-btn">
               Submit
             </button>
-          </form>
-        </div>
-      )}
+          )}
+        </form>
+      </div>
     </div>
   );
 };
 
 export default FoundReportForm;
-

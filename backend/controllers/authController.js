@@ -66,7 +66,7 @@ export const loginController = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Email and password are required",
+        message: "Email and password are required!!!",
       });
     }
 
@@ -75,7 +75,7 @@ export const loginController = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "Email is not registered",
+        message: "Email is not registered!!!",
       });
     }
 
@@ -84,7 +84,7 @@ export const loginController = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({
         success: false,
-        message: "Invalid password",
+        message: "Invalid password!!!",
       });
     }
 
@@ -95,7 +95,7 @@ export const loginController = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Login successful",
+      message: "Login successfully!!!",
       user: {
         _id: user._id,
         name: user.name,

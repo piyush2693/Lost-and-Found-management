@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginForm.css";
 import axios from "axios";
@@ -22,6 +22,7 @@ const Login = () => {
         email,
         password,
       });
+      
       if (res && res.data.success) {
         const token = res.data.token;
         const user = res.data.user;
@@ -29,12 +30,15 @@ const Login = () => {
         login(user, token); 
 
       }
-      toast.success("Login Successfully!!!");
+      toast.success(res.data.message);
       navigate("/home");
     } catch (error) {
+      const errorMessage = error?.response?.data?.message || "Login failed. Try again.";
+      toast.error(errorMessage);
       console.log(error);
+    } finally {
+      setLoader(false);
     }
-    setLoader(false);
   }; 
   useEffect(() => {
     const storedData = localStorage.getItem("auth");
@@ -55,7 +59,8 @@ const Login = () => {
           }
         }
       } catch (e) {
-        console.error("Invalid auth data", e);
+        console.error("Invalid auth data");
+        toast.error("Invalid auth data");
         localStorage.removeItem("auth");
       }
     }

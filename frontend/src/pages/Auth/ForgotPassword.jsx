@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/ForgotPassword.css";
 import ButtonSpinner from "../../components/Loader/ButtonSpinner";
+import { toast } from "react-toastify";
 
 function ForgotPassword() {
   const navigate = useNavigate();
@@ -23,16 +24,16 @@ function ForgotPassword() {
           },
         }
       );
-
+      toast.success(res.data.message);
       navigate("/login");
     } catch (err) {
-      console.error(
-        "Forgot password error:",
-        err?.response?.data || err.message
-      );
-      alert("Something went wrong. Please try again.");
+      const errorMessage = err?.response?.data || err.message;
+      toast.error(errorMessage);
+
+    } finally {
+      setLoader(false);
     }
-    setLoader(false);
+    
   };
   return (
     <>
