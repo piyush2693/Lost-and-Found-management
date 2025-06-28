@@ -50,7 +50,7 @@ async function uploadToCloudinary(req, res, next) {
 }
 
 import { foundReport, lostReport } from "../controllers/reportItem.js";
-import { getLostItems, getFoundItems } from "../controllers/getItems.js";
+import { getLostItems, getFoundItems, searchFoundItemsController, searchLostItemsController } from "../controllers/getItems.js";
 
 
 router.post("/found-report", upload.single("image"), uploadToCloudinary, foundReport);
@@ -58,9 +58,12 @@ router.post("/lost-report", upload.single("image"), uploadToCloudinary, lostRepo
 
 
 
-router.get("/lost-items", getLostItems);
+router.get("/lost-items",  getLostItems);
 router.get("/found-items", getFoundItems);
 
+//search Items
+router.get("/search-found/:keyword", searchFoundItemsController);
+router.get("/search-lost/:keyword", searchLostItemsController);
 
 
 export default router;

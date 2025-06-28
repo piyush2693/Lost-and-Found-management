@@ -22,3 +22,45 @@ export const getLostItems = async (req, res) => {
   }
 };
 
+// search found product
+export const searchFoundItemsController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const resutls = await FoundItem.find({
+      $or: [
+        { category: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    });
+
+    res.json(resutls);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Search Item API",
+      error,
+    });
+  }
+};
+// search lost product
+export const searchLostItemsController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const resutls = await LostItem.find({
+      $or: [
+        { category: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
+      ],
+    });
+
+    res.json(resutls);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error In Search Item API",
+      error,
+    });
+  }
+};

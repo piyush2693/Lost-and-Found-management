@@ -1,9 +1,9 @@
 import { useState, useContext, createContext, useEffect } from "react";
 
-// 1️⃣ Create Context
+// 1 Create Context
 const AuthContext = createContext();
 
-// 2️⃣ Create Provider
+// 2 Create Provider
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-// 3️⃣ Create custom hook for easy access
+// 3 Create custom hook for easy access
 const useAuth = () => useContext(AuthContext);
 
 export { useAuth, AuthProvider };

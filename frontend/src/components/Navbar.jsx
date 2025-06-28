@@ -93,7 +93,7 @@ const Navbar = () => {
           >
             {auth?.token && (
               <>
-                <Link to="/home" className="nav-link" onClick={handleLink}>
+                <Link to="/home"  className="nav-link"  onClick={handleLink}>
                   Home
                 </Link>
                 <Link to="/lost" className="nav-link" onClick={handleLink}>
